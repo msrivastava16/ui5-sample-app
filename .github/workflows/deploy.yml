@@ -1,0 +1,48 @@
+name: Build and Deploy Fiori App to SAP BTP
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Setup Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Step 4: Build the Fiori app
+      - name: Build UI5 app
+        run: npm run build
+
+      # Step 5: Install Cloud Foundry CLI
+      - name: Install CF CLI
+        run: |
+          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary" | tar -zx
+          sudo mv cf /usr/local/bin
+
+      # Step 6: Login to Cloud Foundry
+      - name: CF Login
+        run: cf login -a "https://api.cf.ap21.hana.ondemand.com" \
+                      -u "ashharusman@faircg.com" \
+                      -p "aQR$8W8YTkYHbcKO" \
+                      -o "a7695881trial" \
+                      -s "dev"
+
+      # Step 7: Deploy to BTP
+      - name: Deploy to SAP BTP
+        run: cf push
