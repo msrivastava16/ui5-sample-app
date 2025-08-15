@@ -32,7 +32,7 @@ jobs:
       # Step 5: Install Cloud Foundry CLI
       - name: Install CF CLI
         run: |
-          curl -L "https://packages.cloudfoundry.org/stable?release=linux64-binary" | tar -zx
+          wget -q -O - "https://packages.cloudfoundry.org/stable?release=linux64-binary&source=github" | tar -zx
           sudo mv cf /usr/local/bin
 
       # Step 6: Login to Cloud Foundry
