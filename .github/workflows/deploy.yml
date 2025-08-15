@@ -39,11 +39,13 @@ jobs:
 
       # Step 6: Login to Cloud Foundry
       - name: CF Login
-        run: cf login -a "https://api.cf.ap21.hana.ondemand.com" \
-               -u "ashharusman@faircg.com" \
-               -p "aQR\$8W8YTkYHbcKO" \
-               -o "a7695881trial" \
-               -s "dev"
+        run: |
+          cf login \
+            -a "https://api.cf.ap21.hana.ondemand.com" \
+            -u "ashharusman@faircg.com" \
+            -p "aQR\$8W8YTkYHbcKO" \
+            -o "a7695881trial" \
+            -s "dev"
 
       # Step 7: Deploy to BTP
       - name: Deploy to SAP BTP
