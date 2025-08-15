@@ -30,12 +30,12 @@ jobs:
         run: npm run build
 
       # Step 5: Install Cloud Foundry CLI
-      - name: Install Cloud Foundry CLI
+      - name: Install Cloud Foundry CLI v8
         run: |
-          wget -q -O - https://packages.cloudfoundry.org/debian/cli.cloudfoundry.org.key | sudo apt-key add -
-          echo "deb https://packages.cloudfoundry.org/debian stable main" | sudo tee /etc/apt/sources.list.d/cloudfoundry-cli.list
-          sudo apt-get update
-          sudo apt-get install cf-cli -y
+          wget -q "https://packages.cloudfoundry.org/stable?release=linux64-binary&version=8.7.10" -O cf-cli.tgz
+          tar -xvf cf-cli.tgz
+          sudo mv cf8 /usr/local/bin/cf
+          cf version
 
       # Step 6: Login to Cloud Foundry
       - name: CF Login
